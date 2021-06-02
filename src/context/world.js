@@ -8,11 +8,13 @@ export const useWorld = () => useContext(World);
 
 const WorldProvider = ({children}) => {
 
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
 
     const fetchData = async () => {
         let res = await axios.get('https://restcountries.eu/rest/v2/all')
-        setData(res.data);
+        // localStorage.setItem('countries', JSON.stringify(res.data));
+        // setData(JSON.parse(localStorage.getItem('countries')));
+        setData(res.data)
     }
 
     useEffect(() => {
@@ -25,7 +27,7 @@ const WorldProvider = ({children}) => {
                 data
             }}
         >
-            {children}
+            {data && children}
         </World.Provider>
     )
 }
